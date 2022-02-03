@@ -21,7 +21,7 @@ public class UserController {
     public ResponseEntity<?> registration(@RequestBody UserEntity user) {
         try {
             userService.registration(user);
-            return  ResponseEntity.ok("Пользоватеь успешно сохранён!");
+            return ResponseEntity.ok("Пользоватеь успешно сохранён!");
         } catch (UserAlreadyExistException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
@@ -36,6 +36,16 @@ public class UserController {
             return ResponseEntity.ok(userService.getOne(id));
         } catch (UserNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Произошла ошибка!");
+        }
+    }
+
+
+    @DeleteMapping("/{id")
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(userService.delete(id));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Произошла ошибка!");
         }
